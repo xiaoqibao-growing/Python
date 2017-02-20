@@ -24,5 +24,5 @@ def index_words_iter(text):
             yield index + 1
 
 address = 'Four score and seven years ago...'
-result = index_words_iter(address)
-print list(result)
+results = index_words_iter(address)
+print list(results)
