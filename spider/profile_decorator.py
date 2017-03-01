@@ -5,7 +5,7 @@ import pstats
 import os
 
 
-def do_cprofile(filename):
+def do_c_profile(filename):
     """
     Decorator for function profiling.
     :param filename:
@@ -15,7 +15,7 @@ def do_cprofile(filename):
         def profiled_func(*args, **kwargs):
             profile = cProfile.Profile()
             profile.enable()
-            result = func(*args, **kwargs)
+            # result = func(*args, **kwargs)
             profile.disable()
 
             sortby = "tottime"
