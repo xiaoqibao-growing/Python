@@ -1,5 +1,6 @@
 # -*- coding:utf-8 -*-
 # __author__ = xuejun
+
 """
     This program will tell you how to get data from closure.
 """

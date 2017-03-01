@@ -1,6 +1,11 @@
 # -*- coding:utf-8 -*-
 # __author__ = xuejun
 
+"""
+    zh:我们应该考虑用生成器来改写直接返回列表的函数
+    en:We should consider using the generator to override the function that returns the list directly.
+"""
+
 
 def index_words(text):
     result = []
