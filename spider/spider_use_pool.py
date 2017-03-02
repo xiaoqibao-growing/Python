@@ -1,27 +1,27 @@
 # -*- coding:utf-8 -*-
 # __author__ = xuejun
-# import urllib
-# import urllib2
 import requests
-import ssl
 from lxml import etree
-from profile_decorator import do_c_profile
+from time import time
+from concurrent.futures import ProcessPoolExecutor
 
 url = 'https://movie.douban.com/top250'
-context = ssl.SSLContext(ssl.PROTOCOL_TLSv1)
 
 
 def fetch_page(url_path):
-    # request = urllib2.Request(url_path)
-    # response = urllib2.urlopen(request)
     response = requests.get(url_path)
 
     return response
 
 
+def fetch_content(_url):
+    response = fetch_page(_url)
+    page = response.content
+    return page
+
+
 def parse(url_path):
     response = fetch_page(url_path)
-    # page = response.read()  # urllib2
     page = response.content  # requests
     html = etree.HTML(page)
 
@@ -39,19 +39,25 @@ def parse(url_path):
     for p in pages:
         fetch_list.append(url_path + p.get('href'))
 
-    for url_item in fetch_list:
-        response = fetch_page(url_item)
-        # page = response.read()
-        page = response.content
-        html = etree.HTML(page)
+    with ProcessPoolExecutor(max_workers=4) as executor:
+        for page in executor.map(fetch_content, fetch_list):
+            html = etree.HTML(page)
 
-        for element_movie in html.xpath(xpath_movie):
-            result.append(element_movie)
+            for element_movie in html.xpath(xpath_movie):
+                result.append(element_movie)
 
     for i, movie in enumerate(result, 1):
         title = movie.find(xpath_title).text
         print(title)
 
 
+def main():
+    start = time()
+    for i in range(5):
+        parse(url)
+    end = time()
+
+    print('Cost {} seconds.'.format((start - end) / 5))
+
 if __name__ == '__main__':
-    parse(url)
+    main()
