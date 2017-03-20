@@ -9,10 +9,10 @@ import bisect
 
 class SortedList(list):
     def __init__(self, iterable):
+        print(self)
         super(SortedList, self).__init__(sorted(iterable))
 
     def insort(self, item):
-        print(self)
         bisect.insort(self, item)
 
     def index(self, value, start=None, stop=None):
