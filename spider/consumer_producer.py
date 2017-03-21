@@ -24,7 +24,7 @@ if __name__ == '__main__':
     c.send(None)
     p = producer(c)
     for status in p:
-        if status == False:
+        if not status:
             print("我只要3,4,5就醒啦。")
             break
 
