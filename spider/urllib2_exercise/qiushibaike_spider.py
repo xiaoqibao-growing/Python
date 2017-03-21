@@ -2,6 +2,7 @@
 import chardet
 import urllib2
 import re
+import sys
 
 from threading import Thread
 
@@ -20,7 +21,7 @@ def get_content(urlpath):
 
 def get_content_by_add_headers(urlpath):
 	"""
-	第二步：添加请求头。
+	第二步：添加请求头，异常处理以及编码处理。
 	为了能有一个直观的函数印象，所以这里我使用了很多单词的驼峰法。。
 	headers哪里来的，可以通过你的浏览器通过开发者工具获得。
 	"""
@@ -31,7 +32,12 @@ def get_content_by_add_headers(urlpath):
 
 	request = urllib2.Request(url=urlpath, headers=headers)
 
-	response = urllib2.urlopen(request)
+	try:
+		response = urllib2.urlopen(request)
+	except urllib2.HTTPError as e:
+		print(u"错误编码：" + str(e.code) + u",错误提示：" + e.reason)
+		sys.exit()
+
 	content = response.read()
 
 	encode = chardet.detect(content)['encoding']
@@ -71,11 +77,7 @@ def get_content_by_regex(content):
 result = []
 def get_content_by_thread(content):
 	"""
-	第三步：通过正则表达式获取内容，因为每个页面主体构造都是一样的，所以
-	通过正则表达式很容易获取到页面中的内容。
-	正则表达式相关的内容请在我Python包下的regular_expression下查看。
-	内容获取到了，我们要得到发帖人名称，年龄，帖子内容以及点赞数。
-	re.S为点任意匹配模式，改变了.的行为。
+	第四步：通过线程一次爬取多个页面并保存在文件中。
 	"""
 	"""
 	regex中：第一个分组(即正则中的括号)表示发帖人，
