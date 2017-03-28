@@ -1,1 +1,8 @@
-ÕâÊÇÎÒÆ½Ê±Óöµ½µÄÎÊÌâµÄÒ»¸ö×Ü½á£¬ÆäÖĞ°üº¬ÁËÎÊÌâµÄÃèÊöÒÔ¼°ÎÊÌâµÄ½â¾ö·½°¸£¬Ï£ÍûÄÜ¹»°ïÖúµ½´ó¼Ò£¬ÕâÑùÎÒÒ²ÊÇ·Ç³£¿ªĞÄµÄ¡£
+###è°¨ä»¥æ­¤è®°å½•æˆ‘å­¦ä¹ Pythonçš„å†ç¨‹
+- Which contains some of the problems encountered when learning Python, you can have a general understanding by the name of the folder.
+
+- about_fileÂ£ÂºPython handles files
+- data_structure: Python data structure
+- network_programming_cookbook: Python network programming cookbook
+- regular_expression: Python regular
+- spider: Python spider
