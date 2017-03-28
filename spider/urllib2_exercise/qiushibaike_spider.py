@@ -34,9 +34,13 @@ def get_content_by_add_headers(urlpath):
 
 	try:
 		response = urllib2.urlopen(request)
-	except urllib2.HTTPError as e:
-		print(u"错误编码：" + str(e.code) + u",错误提示：" + e.reason)
+	except urllib2.HTTPError as he:
+		print(u"错误编码:" + str(he.code))
 		sys.exit()
+	except urllib2.URLError as ue:
+		print(u"错误原因:" + ue.reason)
+		sys.exit()
+
 
 	content = response.read()
 

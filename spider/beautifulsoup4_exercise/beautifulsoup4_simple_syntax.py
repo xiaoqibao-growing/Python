@@ -35,6 +35,6 @@ print(soup.find_all('p'))  # 通过find_all()获取所有的相关标签
 print(soup.find(id="link3"))  #在soup对象中通过字符串寻找标签
 
 for link  in soup.find_all("a"):  # 获取所有的a标签
-	print(link['href'])  # 从a标签中获取href内容
+	print(link['class'])  # 从a标签中获取href内容
 
 print(soup.get_text())  #从文档中获取所有内容，即除去页面标签和标签的相关属性之外的内容

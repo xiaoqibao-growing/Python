@@ -1,6 +1,7 @@
 # -*- coding=utf-8 -*-
 import urllib2
 import sys
+import chardet
 from bs4 import BeautifulSoup
 
 class BaiduTieba(object):
@@ -18,6 +19,7 @@ class BaiduTieba(object):
 			sys.exit()
 
 		content = html.read()
+
 		return content
 
 	def get_tiezi_theme(self):
@@ -25,13 +27,14 @@ class BaiduTieba(object):
 		soup = BeautifulSoup(content, 'html.parser')
 
 		result = []
-		for a in soup.find_all("a"):			
-			if a.has_attr('class') and a['class'] == "j_th_tit":
-				print(a)
-				result.append(a)
+		for a in soup.find_all("a"):
+			if a.has_attr('class'):
+				if a['class'] == [u'j_th_tit', u'']:
+					result.append(a['title'])
 
 		return result
 
 if __name__ == '__main__':
 	baidutieba = BaiduTieba("http://tieba.baidu.com/f?ie=utf-8&kw=%E9%AA%91%E5%A3%AB%E5%90%A7&fr=search&red_tag=g0952824988")
-	baidutieba.get_tiezi_theme()
+	for item in baidutieba.get_tiezi_theme():
+		print item 
