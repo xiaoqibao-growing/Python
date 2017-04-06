@@ -14,9 +14,10 @@ ECHO_MSG = "Hello echo server!"
 
 
 class ForkingClient(object):
-    """ A cient to test forking server """
+    """ A client to test forking server """
 
-    def __init__(self, ip, sort):
+    def __init__(self, ip, port):
+        print(ip, port)
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)  # create a socket
         self.sock.connect((ip, port))  # connect to server
 
@@ -60,7 +61,6 @@ def main():
     server_thread.start()
     print("Server loop running PID:%s" % os.getpid())
 
-    # Launch the client(s)
     client1 = ForkingClient(ip, port)
     client1.run()
 
