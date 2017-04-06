@@ -98,10 +98,11 @@ class ChatServer(object):
                     self.clientmap[client] = (address, cname)
 
                     # Send joining information to other clients
-                    msg = "\n(connection: New client (%d) from %s) % (self.clients, self.get_client_name(client))"
+                    msg = "\n(connection: New client (%d) from %s)" % (self.clients, self.get_client_name(client))
 
                     for output in self.outputs:
                         send(output, msg)
+                    self.outputs.append(client)
 
                 elif sock == sys.stdin:
                     # handle standard input
@@ -123,12 +124,13 @@ class ChatServer(object):
                             self.clients -= 1
                             sock.close()
                             inputs.remove(sock)
+                            self.outputs.remove(sock)
 
                             # Sending client leaving information to others
                             msg = "\n(Now hung up: Client from %s)" % self.get_client_name(sock)
 
                             for output in self.outputs:
-                                senf(output, msg)
+                                send(output, msg)
                     except socket.error as se:
                         # remove
                         inputs.remove(sock)
@@ -152,7 +154,7 @@ class ChatClient(object):
         try:
             self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             self.sock.connect((host, self.port))
-            print("Noew connected to chat server@ port %d." % self.port)
+            print("Now connected to chat server@ port %d." % self.port)
             self.connected = True
             # Send my name
             send(self.sock, 'NAME: ' + self.name)
