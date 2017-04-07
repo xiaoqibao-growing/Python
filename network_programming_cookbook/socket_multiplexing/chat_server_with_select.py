@@ -117,7 +117,7 @@ class ChatServer(object):
                             msg = "\n#[" + self.get_client_name(sock) + "]>>" + data
                             # Send data to all except ourself
                             for output in self.outputs:
-                                if output != sock:
+                                if output != sock:  # 给其它的客户端发送消息
                                     send(output, msg)
                         else:
                             print("Chat server: %d hung up" % sock.fileno())
@@ -135,7 +135,7 @@ class ChatServer(object):
                         # remove
                         inputs.remove(sock)
                         self.outputs.remove(sock)
-            self.server.close()
+        self.server.close()
 
 
 class ChatClient(object):
