@@ -17,5 +17,7 @@ if __name__ == '__main__':
 	m = MyClass()
 	m.test()
 
+	print(MyClass().__name__)
+
 	m.x
 	MyClass.x
