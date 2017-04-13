@@ -1,5 +1,7 @@
 # -*- coding=utf-8 -*-
-
+"""
+    把客户端伪装成Chrome
+"""
 import urllib2
 
 BROWSER = 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36'
