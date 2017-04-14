@@ -1,4 +1,7 @@
 # -*- coding=utf-8 -*-
+"""
+    列出FTP远程服务器中的文件。
+"""
 import ftplib
 
 FTP_SERVER_URL = 'ftp.kernel.org'
