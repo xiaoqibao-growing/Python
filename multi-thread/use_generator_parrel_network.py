@@ -18,7 +18,7 @@ class YieldEvent(object):
 class Scheduler(object):
     def __init__(self):
         self._numtasks = 0  # Total num of tasks
-        self._ready = deque  # Tasks ready to run
+        self._ready = deque()  # Tasks ready to run
         self._read_waiting = {}  # Tasks waiting to read
         self._write_waiting = {}  # Tasks waiting to write
 
@@ -48,7 +48,7 @@ class Scheduler(object):
         '''
         self._ready.append((task, msg))
 
-    # Add a task to the reading set`
+    # Add a task to the reading set
     def _read_wait(self, fileno, evt, task):
         self._read_waiting[fileno] = (evt, task)
 
