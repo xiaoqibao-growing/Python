@@ -11,21 +11,24 @@
 另外一个套接字被传给 select() 或类似的一个轮询数据到达的函数。
 '''
 
-import queue
 import socket
 import os
+import threading
+import select
 
-class PollableQueue(queue.Queue):
+from Queue import Queue
+
+
+class PollableQueue():
     def __init__(self):
-        super().__init__()
-
+        self.queue = Queue(20)
         # Create a pair of connected sockets.
         if os.name == "posix":
             self._putsocket, self._getsocket = socket.socketpair()
         else:
             # Compatibility on non-POSIX systems
             server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            server.bind('127.0.0.1', 0)
+            server.bind(('127.0.0.1', 0))
             server.listen(1)
 
             self._putsocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -37,9 +40,33 @@ class PollableQueue(queue.Queue):
         return self._getsocket.fileno()
 
     def put(self, item):
-        super().put(item)
+        self.queue.put(item)
         self._putsocket.send(b'x')
 
     def get(self):
         self._getsocket.recv(1)
-        return super().get()
+        return self.queue.get()
+
+
+def consumer(queues):
+    '''
+    Consumer that reads data on multiple queues simultanenously
+    '''
+    while True:
+        can_read, _, _ = select.select(queues, [], [])
+        for r in can_read:
+            item = r.get()
+            print('GOT:', item)
+
+
+q1 = PollableQueue()
+q2 = PollableQueue()
+q3 = PollableQueue()
+t = threading.Thread(target=consumer, args=([q1, q2, q3],))
+t.setDaemon(True)
+t.start()
+
+q1.put(1)
+q2.put(10)
+q3.put('hello')
+q2.put(15)
