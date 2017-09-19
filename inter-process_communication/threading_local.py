@@ -4,7 +4,7 @@
     它会一直活在主线程中，
     并且又主线程启动的子线程调用这个local实例时，它的值将会保存在相应的子线程的字典中。
 
-    如果想在当前线程保存一个全局值，并且各自线程互不干扰，使用local类吧.
+    如果想在当前线程保存一个全局值，并且各自线程互不干扰，使用local类吧。
 """
 from threading import Thread, local, enumerate, currentThread
 
