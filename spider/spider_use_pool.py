@@ -48,7 +48,7 @@ def parse(url_path):
 
     for i, movie in enumerate(result, 1):
         title = movie.find(xpath_title).text
-        print(title)
+        print(title.encode("utf-8"))
 
 
 def main():

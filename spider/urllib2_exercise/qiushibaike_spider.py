@@ -71,7 +71,7 @@ def get_content_by_regex(content):
 		'<span>(.*?)</span>.*?' \
 		'<i\s.*?>(.*?)</i>.*?' \
 		'<i\s.*?>(.*?)</i>.*?' \
-		'</a>\s</div>'  
+		'</a>\s</div>'
 	pattern = re.compile(regex, re.S)
 	Regex = re.findall(pattern, content)
 	for item in Regex:
@@ -93,7 +93,7 @@ def get_content_by_thread(content):
 		'<span>(.*?)</span>.*?' \
 		'<i\s.*?>(.*?)</i>.*?' \
 		'<i\s.*?>(.*?)</i>.*?' \
-		'</a>\s</div>'  
+		'</a>\s</div>'
 	pattern = re.compile(regex, re.S)
 	Regex = re.findall(pattern, content)
 	for item in Regex:
@@ -110,13 +110,13 @@ if __name__ == '__main__':
 	threads = []
 	for i in range(1, 11):
 		t = Thread(target=get_content_by_thread(get_content_by_add_headers("http://www.qiushibaike.com/8hr/page/"+ str(i) + "/?s=4966944")), args=[])
-		t.start()	
+		t.start()
 		threads.append(t)
 
 	for t in threads:
 		t.join()
 
-	
+
 	with open("result.txt", "w+") as f:
 		for item in result:
 			f.write(item[0]+ " " + item[1] + " " + item[2] + " " + item[3] + " " + item[4])
