@@ -28,8 +28,6 @@ def detect_inactive_hosts(scan_hosts):
             inactive_hosts.append(inactive.dst)
 
         print "Total %d hosts are inactive" %(len(inactive_hosts))
-
-
     except KeyboardInterrupt:
         exit(0)
 
